@@ -6,8 +6,8 @@
  * Scaffolds a new Parse Server project from the template repo.
  *
  * Usage:
- *   npx @cyberneid/create-parse-app <project-name>
- *   npx @cyberneid/create-parse-app          ← prompts for name
+ *   npx @vergaraaa/create-parse-app <project-name>
+ *   npx @vergaraaa/create-parse-app          ← prompts for name
  */
 
 const readline = require("readline");
@@ -16,7 +16,7 @@ const path = require("path");
 const { execSync } = require("child_process");
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const TEMPLATE_REPO = "https://github.com/cyberneid/parse-server-template.git";
+const TEMPLATE_REPO = "https://github.com/vergaraaa/parse-server-template.git";
 // Files that belong to the template meta — not the app itself
 const FILES_TO_REMOVE = ["setup.js", "wiki.md", ".git"];
 
@@ -117,7 +117,8 @@ function patchDeployScript(content, b4aAppName, b4aAppId, email) {
   return content
     .replace(/<YOUR_APP_NAME>/g, b4aAppName)
     .replace(/<YOUR_APP_ID>/g, b4aAppId)
-    .replace(/info@cyberneid\.com/g, email);
+    .replace(/<YOUR_EMAIL>/g, email)
+    .replace(/npm run build/g, "pnpm run build");
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -125,7 +126,7 @@ async function main() {
   // Banner
   log.blank();
   console.log(`${c.bold}${c.cyan}╔═══════════════════════════════════════════╗${c.reset}`);
-  console.log(`${c.bold}${c.cyan}║   create-parse-app  ·  by Cyberneid       ║${c.reset}`);
+  console.log(`${c.bold}${c.cyan}║   create-parse-app  ·  by vergaraaa       ║${c.reset}`);
   console.log(`${c.bold}${c.cyan}╚═══════════════════════════════════════════╝${c.reset}`);
   log.blank();
 
