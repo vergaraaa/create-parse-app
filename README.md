@@ -1,22 +1,22 @@
 # create-parse-app
 
-Scaffold a new [Parse Server](https://parseplatform.org/) project from the Cyberneid template in seconds.
+Scaffold a new [Parse Server](https://parseplatform.org/) project from the vergaraaa template in seconds.
 
 ```bash
-npx @cyberneid/create-parse-app my-new-app
+npx @vergaraaa/create-parse-app my-new-app
 ```
 
 Or without a name (the CLI will prompt you):
 
 ```bash
-npx @cyberneid/create-parse-app
+npx @vergaraaa/create-parse-app
 ```
 
 ---
 
 ## What it does
 
-1. **Clones** [`cyberneid/parse-server-template`](https://github.com/cyberneid/parse-server-template) into a new local folder
+1. **Clones** [`vergaraaa/parse-server-template`](https://github.com/vergaraaa/parse-server-template) into a new local folder
 2. **Prompts** you for:
    - App display name (used as `APP_NAME` in `.env`)
    - Back4App app name (exact name from your dashboard)
@@ -25,7 +25,7 @@ npx @cyberneid/create-parse-app
    - `docker-compose.yml` — renames all services and containers with your app prefix
    - `.env` — sets `APP_NAME` and the correct `DATABASE_URI` hostname
    - `package.json` — sets the `"name"` field
-   - `deploy.sh` — replaces `<YOUR_APP_NAME>` and `<YOUR_APP_ID>` placeholders
+   - `deploy.sh` — replaces `<YOUR_APP_NAME>`, `<YOUR_APP_ID>` placeholders abd `<YOUR_EMAIL>`
 4. **Removes** template-only files (`wiki.md`, `setup.js`)
 5. **Initialises** a fresh git repo with an initial commit
 
@@ -40,6 +40,7 @@ docker compose up           # subsequent runs
 ```
 
 When you're ready to deploy:
+
 ```bash
 ./deploy.sh
 # Then run dbMigrate from the Back4App API Console

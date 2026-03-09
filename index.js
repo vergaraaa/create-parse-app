@@ -118,7 +118,6 @@ function patchDeployScript(content, b4aAppName, b4aAppId, email) {
     .replace(/<YOUR_APP_NAME>/g, b4aAppName)
     .replace(/<YOUR_APP_ID>/g, b4aAppId)
     .replace(/<YOUR_EMAIL>/g, email)
-    .replace(/npm run build/g, "pnpm run build");
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
