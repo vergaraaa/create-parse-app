@@ -1,0 +1,28 @@
+{
+  "name": "@vergaraaa/create-parse-app",
+  "version": "1.0.0",
+  "description": "Scaffold a new Parse Server project from the Cyberneid template",
+  "keywords": [
+    "parse-server",
+    "back4app",
+    "scaffold",
+    "cli",
+    "create-app"
+  ],
+  "homepage": "https://github.com/vergaraaa/create-parse-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vergaraaa/create-parse-app.git"
+  },
+  "license": "MIT",
+  "bin": {
+    "create-parse-app": "./index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {}
+}
