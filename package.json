@@ -1,7 +1,7 @@
 {
   "name": "@vergaraaa/create-parse-app",
-  "version": "1.0.2",
-  "description": "Scaffold a new Parse Server project from the Cyberneid template",
+  "version": "1.0.3",
+  "description": "Scaffold a new Parse Server project from the vergaraaa template",
   "keywords": [
     "parse-server",
     "back4app",

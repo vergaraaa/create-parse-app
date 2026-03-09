@@ -61,6 +61,14 @@ function slugify(str) {
     .replace(/^-+|-+$/g, "");
 }
 
+// "my-app" → "My App"
+function toDisplayName(slug) {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 function run(cmd, cwd) {
   execSync(cmd, { cwd, stdio: "pipe" });
 }
@@ -85,7 +93,7 @@ function patchFile(filePath, patchFn, label) {
   log.success(`Patched ${c.dim}${label}${c.reset}`);
 }
 
-// ─── Patchers (same logic as before, now operating on absolute paths) ─────────
+// ─── Patchers ─────────────────────────────────────────────────────────────────
 
 function patchDockerCompose(content, slug) {
   return content
@@ -118,6 +126,7 @@ function patchDeployScript(content, b4aAppName, b4aAppId, email) {
     .replace(/<YOUR_APP_NAME>/g, b4aAppName)
     .replace(/<YOUR_APP_ID>/g, b4aAppId)
     .replace(/<YOUR_EMAIL>/g, email)
+    .replace(/npm run build/g, "pnpm run build");
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -152,13 +161,15 @@ async function main() {
     process.exit(1);
   }
 
+  // Auto-generate display name from slug — "my-app" → "My App"
+  const appName = toDisplayName(slug);
+
   // ── Back4App details ───────────────────────────────────────────────────────
   log.blank();
   log.divider();
   console.log(`  ${c.dim}Find your App ID: Back4App Dashboard → Your App → Security & Keys${c.reset}`);
   log.blank();
 
-  const appName = await ask("App display name", slug);
   const b4aAppName = await ask("Back4App app name (exact name from dashboard)");
   const b4aAppId = await ask("Back4App App ID");
   const email = await ask("Back4App account email");
@@ -168,7 +179,7 @@ async function main() {
   log.divider();
   console.log(`  ${c.dim}Project folder:${c.reset}     ${c.bold}./${slug}${c.reset}`);
   console.log(`  ${c.dim}Docker prefix:${c.reset}      ${c.bold}${slug}-mongodb${c.reset}, ${c.bold}${slug}-parse-express-app${c.reset}`);
-  console.log(`  ${c.dim}APP_NAME:${c.reset}           ${c.bold}${appName}${c.reset}`);
+  console.log(`  ${c.dim}APP_NAME:${c.reset}           ${c.bold}${appName}${c.reset} ${c.dim}(auto-generated)${c.reset}`);
   if (b4aAppName) console.log(`  ${c.dim}Back4App name:${c.reset}     ${c.bold}${b4aAppName}${c.reset}`);
   if (b4aAppId) console.log(`  ${c.dim}Back4App App ID:${c.reset}    ${c.bold}${b4aAppId}${c.reset}`);
   if (email) console.log(`  ${c.dim}Back4App email:${c.reset}     ${c.bold}${email}${c.reset}`);
@@ -206,7 +217,7 @@ async function main() {
 
   patchFile(
     path.join(targetDir, "docker-compose.yml"),
-    (c) => patchDockerCompose(c, slug),
+    (content) => patchDockerCompose(content, slug),
     "docker-compose.yml"
   );
 
@@ -220,20 +231,20 @@ async function main() {
 
   patchFile(
     envFile,
-    (c) => patchEnv(c, slug, appName),
+    (content) => patchEnv(content, slug, appName),
     ".env"
   );
 
   patchFile(
     path.join(targetDir, "package.json"),
-    (c) => patchPackageJson(c, slug),
+    (content) => patchPackageJson(content, slug),
     "package.json"
   );
 
   if (b4aAppName && b4aAppId) {
     patchFile(
       path.join(targetDir, "deploy.sh"),
-      (c) => patchDeployScript(c, b4aAppName, b4aAppId, email),
+      (content) => patchDeployScript(content, b4aAppName, b4aAppId, email),
       "deploy.sh"
     );
   }
