@@ -262,6 +262,7 @@ async function main() {
   log.blank();
   console.log(`  Next steps:\n`);
   console.log(`  ${c.cyan}cd ${slug}${c.reset}`);
+  console.log(`  ${c.cyan}pnpm i${c.reset}                      ← install dependencies`);
   console.log(`  ${c.cyan}docker compose up --build${c.reset}   ← first run`);
   console.log(`  ${c.cyan}docker compose up${c.reset}           ← subsequent runs`);
   log.blank();
