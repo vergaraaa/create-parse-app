@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.7] - 2026-07-27
+
+### Fixed
+
+- The express service's `container_name` is now prefixed per project
+  (`my_app_parse_app`) instead of the bare, collision-prone `parse_app`, so
+  scaffolding multiple projects on one host no longer clashes. The scaffold
+  summary also reflects the underscore-based names.
+
 ## [1.0.6] - 2026-07-27
 
 ### Changed

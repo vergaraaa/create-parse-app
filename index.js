@@ -102,7 +102,7 @@ function patchDockerCompose(content, slug) {
     .replace(/^(\s*)mongodb(\s*:)/gm, `$1${slug}_mongodb$2`)
     .replace(/^(\s*)parse[-_]app(\s*:)/gm, `$1${slug}_parse_app$2`)
     .replace(/container_name:\s*parse[-_]mongodb/g, `container_name: ${slug}_parse_mongodb`)
-    .replace(/container_name:\s*parse[-_]express[-_]app/g, `container_name: ${slug}_parse_express_app`)
+    .replace(/container_name:\s*parse[-_]app\b/g, `container_name: ${slug}_parse_app`)
     .replace(/(depends_on:\s*\n\s*-\s*)mongodb/g, `$1${slug}_mongodb`)
     .replace(/mongodb:\/\/mongodb:/g, `mongodb://${slug}_mongodb:`);
 }
@@ -180,7 +180,7 @@ async function main() {
   // ── Summary + confirm ──────────────────────────────────────────────────────
   log.divider();
   console.log(`  ${c.dim}Project folder:${c.reset}     ${c.bold}./${slug}${c.reset}`);
-  console.log(`  ${c.dim}Docker prefix:${c.reset}      ${c.bold}${slug}-mongodb${c.reset}, ${c.bold}${slug}-parse-express-app${c.reset}`);
+  console.log(`  ${c.dim}Docker prefix:${c.reset}      ${c.bold}${slug}_mongodb${c.reset}, ${c.bold}${slug}_parse_app${c.reset}`);
   console.log(`  ${c.dim}APP_NAME:${c.reset}           ${c.bold}${appName}${c.reset} ${c.dim}(auto-generated)${c.reset}`);
   if (b4aAppName) console.log(`  ${c.dim}Back4App name:${c.reset}     ${c.bold}${b4aAppName}${c.reset}`);
   if (b4aAppId) console.log(`  ${c.dim}Back4App App ID:${c.reset}    ${c.bold}${b4aAppId}${c.reset}`);
