@@ -1,6 +1,6 @@
 {
   "name": "@vergaraaa/create-parse-app",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Scaffold a new Parse Server project from the vergaraaa template",
   "keywords": [
     "parse-server",
