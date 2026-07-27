@@ -57,14 +57,14 @@ function ask(question, defaultValue) {
 function slugify(str) {
   return str
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
 }
 
-// "my-app" → "My App"
+// "my_app" → "My App"
 function toDisplayName(slug) {
   return slug
-    .split("-")
+    .split(/[-_]/)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
@@ -95,19 +95,21 @@ function patchFile(filePath, patchFn, label) {
 
 // ─── Patchers ─────────────────────────────────────────────────────────────────
 
+// Matches hyphen or underscore in the template's base names so it works
+// regardless of which separator the template uses; always emits underscores.
 function patchDockerCompose(content, slug) {
   return content
-    .replace(/^(\s*)mongodb(\s*:)/gm, `$1${slug}-mongodb$2`)
-    .replace(/^(\s*)parse-app(\s*:)/gm, `$1${slug}-parse-app$2`)
-    .replace(/container_name:\s*parse-mongodb/g, `container_name: ${slug}-parse-mongodb`)
-    .replace(/container_name:\s*parse-express-app/g, `container_name: ${slug}-parse-express-app`)
-    .replace(/(depends_on:\s*\n\s*-\s*)mongodb/g, `$1${slug}-mongodb`)
-    .replace(/mongodb:\/\/mongodb:/g, `mongodb://${slug}-mongodb:`);
+    .replace(/^(\s*)mongodb(\s*:)/gm, `$1${slug}_mongodb$2`)
+    .replace(/^(\s*)parse[-_]app(\s*:)/gm, `$1${slug}_parse_app$2`)
+    .replace(/container_name:\s*parse[-_]mongodb/g, `container_name: ${slug}_parse_mongodb`)
+    .replace(/container_name:\s*parse[-_]express[-_]app/g, `container_name: ${slug}_parse_express_app`)
+    .replace(/(depends_on:\s*\n\s*-\s*)mongodb/g, `$1${slug}_mongodb`)
+    .replace(/mongodb:\/\/mongodb:/g, `mongodb://${slug}_mongodb:`);
 }
 
 function patchEnv(content, slug, appName) {
   return content
-    .replace(/DATABASE_URI=mongodb:\/\/mongodb:/g, `DATABASE_URI=mongodb://${slug}-mongodb:`)
+    .replace(/DATABASE_URI=mongodb:\/\/mongodb:/g, `DATABASE_URI=mongodb://${slug}_mongodb:`)
     .replace(/APP_NAME=.*/g, `APP_NAME=${appName}`);
 }
 
