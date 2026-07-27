@@ -3,13 +3,21 @@
 Scaffold a new [Parse Server](https://parseplatform.org/) project from the vergaraaa template in seconds.
 
 ```bash
+# npm
 npx @vergaraaa/create-parse-app my-new-app
+
+# pnpm
+pnpm dlx @vergaraaa/create-parse-app my-new-app
+# or, using the create convention:
+pnpm create @vergaraaa/parse-app my-new-app
 ```
 
 Or without a name (the CLI will prompt you):
 
 ```bash
 npx @vergaraaa/create-parse-app
+# or
+pnpm dlx @vergaraaa/create-parse-app
 ```
 
 ---
@@ -25,7 +33,7 @@ npx @vergaraaa/create-parse-app
    - `docker-compose.yml` — renames all services and containers with your app prefix
    - `.env` — sets `APP_NAME` and the correct `DATABASE_URI` hostname
    - `package.json` — sets the `"name"` field
-   - `deploy.sh` — replaces `<YOUR_APP_NAME>`, `<YOUR_APP_ID>` placeholders abd `<YOUR_EMAIL>`
+   - `deploy.sh` — replaces `<YOUR_APP_NAME>`, `<YOUR_APP_ID>` and `<YOUR_EMAIL>` placeholders
 4. **Removes** template-only files (`wiki.md`, `setup.js`)
 5. **Initialises** a fresh git repo with an initial commit
 
@@ -35,9 +43,12 @@ npx @vergaraaa/create-parse-app
 
 ```bash
 cd my-new-app
+pnpm i                      # install dependencies
 docker compose up --build   # first run
 docker compose up           # subsequent runs
 ```
+
+> The generated project uses **pnpm** (the deploy script runs `pnpm run build`).
 
 When you're ready to deploy:
 
